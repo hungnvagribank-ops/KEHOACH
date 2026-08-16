@@ -93,6 +93,7 @@
     line-height:1.04;
     margin:0 0 34px;
     letter-spacing:-0.01em;
+    text-align:center;
   }
   h1.title em{
     font-style:italic;
@@ -145,15 +146,16 @@
   .tabbtn{
     font-family:'Inter';
     font-weight:600;
-    font-size:14.5px;
+    font-size:13px;
     background:var(--paper2);
     border:1px solid var(--line);
     color:var(--muted);
-    padding:13px 22px;
+    padding:10px 16px;
     border-radius:999px;
     cursor:pointer;
     transition:all .15s ease;
-    display:flex; align-items:center; gap:8px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    flex:1 1 0;
   }
   .tabbtn .n{
     font-family:'JetBrains Mono';
@@ -229,9 +231,9 @@
     background:var(--paper2);
     border:1px solid var(--line);
     border-radius:var(--radius);
-    overflow:hidden;
+    overflow-x:auto;
   }
-  table{ width:100%; border-collapse:collapse; }
+  table{ width:100%; border-collapse:collapse; min-width:520px; }
   thead th{
     text-align:left;
     font-family:'Inter';
@@ -387,7 +389,13 @@
   @media (max-width:640px){
     .stats-row{ grid-template-columns:repeat(2,1fr); }
     .tabbar{ flex-wrap:wrap; }
-    thead th:nth-child(3), td:nth-child(3){ display:none; }
+    /* Keep all columns visible on mobile, just shrink text/padding */
+    thead th{ font-size:9.5px; padding:10px 6px; }
+    td{ font-size:12px; padding:10px 6px; }
+    td.ma-lop{ font-size:12.5px; }
+    td.ma-lop .sub{ font-size:10.5px; }
+    td.mono{ font-size:11px; }
+    td.num{ font-size:12.5px; }
   }
 
   /* ---------- GANTT TAB ---------- */
@@ -416,10 +424,10 @@
   .nav-btn:hover:not(:disabled){ background:var(--teal-soft); border-color:var(--teal); }
   .nav-btn:disabled{ opacity:0.35; cursor:not-allowed; }
   .nav-month{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:19px;
-    color:var(--deep);
+    font-family:'Inter';
+    font-weight:700;
+    font-size:18px;
+    color:var(--bordeaux);
     min-width:150px;
     text-align:center;
   }
@@ -927,7 +935,7 @@ function renderClassRow(c){
   return `
   <tr class="datarow" data-target="${rowId}">
     <td><span class="chev">▸</span></td>
-    <td class="ma-lop">${c.ma}<div class="sub">${c.ct || ''}</div></td>
+    <td class="ma-lop">${c.lbl || c.ma}<div class="sub">${c.ct || ''}</div></td>
     <td class="mono">${c.loc || '—'}</td>
     <td class="mono">${c.tg || '—'}</td>
     <td class="num">${fmtInt(c.tong)}</td>
